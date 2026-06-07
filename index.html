@@ -5,933 +5,884 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SKA-SKMU 전력 직접거래계약 분석 | 2026.06.07</title>
 <style>
-  :root {
-    --red: #e53e3e; --red-light: #fff5f5; --red-border: #fed7d7;
-    --yellow: #d69e2e; --yellow-light: #fffff0; --yellow-border: #faf089;
-    --green: #38a169; --green-light: #f0fff4; --green-border: #9ae6b4;
-    --blue: #3182ce; --blue-light: #ebf8ff; --blue-border: #bee3f8;
-    --gray: #718096; --gray-light: #f7fafc; --gray-border: #e2e8f0;
-    --dark: #1a202c; --mid: #4a5568;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; background: #f0f4f8; color: var(--dark); font-size: 14px; line-height: 1.7; }
+:root {
+  --red: #e53e3e; --red-light: #fff5f5; --red-border: #fed7d7;
+  --yellow: #d69e2e; --yellow-light: #fffff0; --yellow-border: #faf089;
+  --green: #38a169; --green-light: #f0fff4; --green-border: #9ae6b4;
+  --blue: #3182ce; --blue-light: #ebf8ff; --blue-border: #bee3f8;
+  --gray: #718096; --gray-light: #f7fafc; --gray-border: #e2e8f0;
+  --dark: #1a202c; --mid: #4a5568;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; background: #f0f4f8; color: var(--dark); font-size: 14px; line-height: 1.7; }
 
-  /* Header */
-  .page-header {
-    background: linear-gradient(135deg, #1a365d 0%, #2c5282 60%, #2b6cb0 100%);
-    color: white; padding: 40px 48px; position: relative; overflow: hidden;
-  }
-  .page-header::before {
-    content: ''; position: absolute; top: -60px; right: -60px;
-    width: 300px; height: 300px; border-radius: 50%;
-    background: rgba(255,255,255,0.05);
-  }
-  .header-badge {
-    display: inline-block; background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.3); border-radius: 20px;
-    padding: 4px 14px; font-size: 12px; margin-bottom: 12px; letter-spacing: 0.5px;
-  }
-  .page-header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
-  .page-header .subtitle { font-size: 15px; opacity: 0.8; margin-bottom: 20px; }
-  .meta-row { display: flex; gap: 24px; flex-wrap: wrap; }
-  .meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; opacity: 0.85; }
-  .meta-item span:first-child { opacity: 0.6; }
+.page-header {
+  background: linear-gradient(135deg, #1a365d 0%, #2c5282 60%, #2b6cb0 100%);
+  color: white; padding: 40px 48px; position: relative; overflow: hidden;
+}
+.page-header::before {
+  content: ''; position: absolute; top: -60px; right: -60px;
+  width: 300px; height: 300px; border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+}
+.header-badge {
+  display: inline-block; background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3); border-radius: 20px;
+  padding: 4px 14px; font-size: 12px; margin-bottom: 12px; letter-spacing: 0.5px;
+}
+.page-header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+.page-header .subtitle { font-size: 15px; opacity: 0.8; margin-bottom: 20px; }
+.meta-row { display: flex; gap: 24px; flex-wrap: wrap; }
+.meta-item { display: flex; align-items: center; gap: 6px; font-size: 13px; opacity: 0.85; }
 
-  /* Nav */
-  .tab-nav {
-    background: white; border-bottom: 1px solid var(--gray-border);
-    padding: 0 48px; display: flex; gap: 4px; overflow-x: auto;
-    position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  }
-  .tab-btn {
-    padding: 14px 20px; border: none; background: none; cursor: pointer;
-    font-size: 13px; font-weight: 600; color: var(--gray); border-bottom: 3px solid transparent;
-    white-space: nowrap; transition: all 0.2s; font-family: inherit;
-  }
-  .tab-btn:hover { color: var(--blue); }
-  .tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
+.tab-nav {
+  background: white; border-bottom: 1px solid var(--gray-border);
+  padding: 0 48px; display: flex; gap: 4px; overflow-x: auto;
+  position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.tab-btn {
+  padding: 14px 20px; border: none; background: none; cursor: pointer;
+  font-size: 13px; font-weight: 600; color: var(--gray); border-bottom: 3px solid transparent;
+  white-space: nowrap; transition: all 0.2s; font-family: inherit;
+}
+.tab-btn:hover { color: var(--blue); }
+.tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
 
-  /* Content */
-  .content { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
-  .tab-section { display: none; }
-  .tab-section.active { display: block; }
+.main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
 
-  /* Cards */
-  .card {
-    background: white; border-radius: 12px; padding: 28px 32px;
-    margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    border: 1px solid var(--gray-border);
-  }
-  .card-title {
-    font-size: 17px; font-weight: 700; color: var(--dark);
-    margin-bottom: 18px; padding-bottom: 12px;
-    border-bottom: 2px solid var(--gray-border);
-    display: flex; align-items: center; gap: 10px;
-  }
-  .card-title .icon { font-size: 20px; }
+/* Cards */
+.card { background: white; border-radius: 12px; padding: 28px; margin-bottom: 20px; box-shadow: 0 1px 6px rgba(0,0,0,0.07); }
+.card-title { font-size: 17px; font-weight: 700; color: var(--dark); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.section-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--gray); margin-bottom: 10px; }
 
-  /* Alert boxes */
-  .alert {
-    border-radius: 8px; padding: 16px 20px; margin-bottom: 16px;
-    border-left: 4px solid; display: flex; gap: 12px;
-  }
-  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-  .alert-content h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-  .alert-content p { font-size: 13px; line-height: 1.6; margin: 0; }
-  .alert.red { background: var(--red-light); border-color: var(--red); color: #742a2a; }
-  .alert.yellow { background: var(--yellow-light); border-color: var(--yellow); color: #744210; }
-  .alert.green { background: var(--green-light); border-color: var(--green); color: #1c4532; }
-  .alert.blue { background: var(--blue-light); border-color: var(--blue); color: #1a365d; }
+/* Badges */
+.badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; letter-spacing: 0.3px; }
+.badge-red { background: var(--red-light); color: var(--red); border: 1px solid var(--red-border); }
+.badge-yellow { background: var(--yellow-light); color: var(--yellow); border: 1px solid var(--yellow-border); }
+.badge-green { background: var(--green-light); color: var(--green); border: 1px solid var(--green-border); }
+.badge-blue { background: var(--blue-light); color: var(--blue); border: 1px solid var(--blue-border); }
+.badge-gray { background: var(--gray-light); color: var(--gray); border: 1px solid var(--gray-border); }
 
-  /* Tables */
-  .table-wrap { overflow-x: auto; margin: 16px 0; }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th {
-    background: #2d3748; color: white; padding: 10px 14px;
-    text-align: left; font-weight: 600; white-space: nowrap;
-  }
-  td { padding: 10px 14px; border-bottom: 1px solid var(--gray-border); vertical-align: top; }
-  tr:hover td { background: var(--gray-light); }
-  tr:last-child td { border-bottom: none; }
-  td.favorable { color: var(--green); font-weight: 600; }
-  td.unfavorable { color: var(--red); font-weight: 600; }
-  td.neutral { color: var(--gray); }
+/* Summary boxes */
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.summary-box { border-radius: 10px; padding: 18px; border-left: 4px solid; }
+.summary-box.red { background: var(--red-light); border-color: var(--red); }
+.summary-box.yellow { background: var(--yellow-light); border-color: var(--yellow); }
+.summary-box.green { background: var(--green-light); border-color: var(--green); }
+.summary-box.blue { background: var(--blue-light); border-color: var(--blue); }
+.summary-box .label { font-size: 11px; font-weight: 700; color: var(--gray); margin-bottom: 6px; }
+.summary-box .value { font-size: 20px; font-weight: 700; }
+.summary-box .desc { font-size: 12px; color: var(--mid); margin-top: 4px; }
 
-  /* Badges */
-  .badge {
-    display: inline-block; border-radius: 4px; padding: 2px 8px;
-    font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
-  }
-  .badge-red { background: var(--red); color: white; }
-  .badge-yellow { background: var(--yellow); color: white; }
-  .badge-green { background: var(--green); color: white; }
-  .badge-blue { background: var(--blue); color: white; }
-  .badge-gray { background: var(--gray); color: white; }
+/* Action items */
+.action-list { list-style: none; }
+.action-list li { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--gray-border); }
+.action-list li:last-child { border-bottom: none; }
+.action-num { width: 26px; height: 26px; border-radius: 50%; background: var(--red); color: white; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+.action-num.y { background: var(--yellow); }
+.action-num.g { background: var(--green); }
+.action-content strong { display: block; font-size: 14px; margin-bottom: 3px; }
+.action-content span { font-size: 13px; color: var(--mid); }
 
-  /* Summary boxes */
-  .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 20px; }
-  .summary-box {
-    border-radius: 10px; padding: 18px 20px;
-    border: 1px solid; text-align: center;
-  }
-  .summary-box .val { font-size: 28px; font-weight: 800; margin: 8px 0; }
-  .summary-box .label { font-size: 12px; font-weight: 600; opacity: 0.7; }
-  .summary-box .desc { font-size: 12px; margin-top: 6px; line-height: 1.5; }
-  .box-red { background: var(--red-light); border-color: var(--red-border); color: #742a2a; }
-  .box-yellow { background: var(--yellow-light); border-color: var(--yellow-border); color: #744210; }
-  .box-green { background: var(--green-light); border-color: var(--green-border); color: #1c4532; }
-  .box-blue { background: var(--blue-light); border-color: var(--blue-border); color: #1a365d; }
+/* Accordion */
+.accordion-item { border: 1px solid var(--gray-border); border-radius: 10px; margin-bottom: 8px; overflow: hidden; }
+.accordion-header {
+  display: flex; align-items: center; gap: 10px; padding: 14px 18px;
+  cursor: pointer; background: white; user-select: none;
+  transition: background 0.15s;
+}
+.accordion-header:hover { background: var(--gray-light); }
+.accordion-header.open { background: var(--blue-light); border-bottom: 1px solid var(--blue-border); }
+.accordion-arrow { font-size: 11px; color: var(--gray); transition: transform 0.2s; margin-left: auto; }
+.accordion-header.open .accordion-arrow { transform: rotate(180deg); }
+.accordion-body { display: none; padding: 16px 18px; background: #fafbfc; }
+.accordion-header.open + .accordion-body { display: block; }
 
-  /* Scenario bars */
-  .scenario-bar { margin: 12px 0; }
-  .scenario-label { font-size: 13px; font-weight: 600; margin-bottom: 6px; display: flex; justify-content: space-between; }
-  .bar-track { background: #e2e8f0; border-radius: 6px; height: 28px; position: relative; overflow: hidden; }
-  .bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; padding-left: 12px; font-size: 12px; font-weight: 700; color: white; transition: width 0.8s ease; }
-  .bar-green { background: linear-gradient(90deg, #38a169, #68d391); }
-  .bar-yellow { background: linear-gradient(90deg, #d69e2e, #f6e05e); }
-  .bar-orange { background: linear-gradient(90deg, #dd6b20, #f6ad55); }
-  .bar-red { background: linear-gradient(90deg, #e53e3e, #fc8181); }
+.clause-num { width: 48px; height: 24px; border-radius: 6px; background: var(--blue-light); color: var(--blue); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.clause-title { font-size: 14px; font-weight: 600; flex: 1; }
 
-  /* Info blocks */
-  .info-block {
-    background: var(--gray-light); border-radius: 8px;
-    padding: 16px 20px; margin: 12px 0; border: 1px solid var(--gray-border);
-  }
-  .info-block h4 { font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--mid); }
-  .code-box {
-    background: #1a202c; color: #a0aec0; border-radius: 8px;
-    padding: 16px 20px; font-family: 'Consolas', monospace; font-size: 13px;
-    margin: 12px 0; line-height: 1.8; overflow-x: auto;
-  }
-  .code-box .highlight { color: #fbbf24; font-weight: 700; }
-  .code-box .comment { color: #4a9eff; }
-  .code-box .value { color: #68d391; }
+.clause-detail { font-size: 13px; color: var(--mid); line-height: 1.8; }
+.clause-detail .row { display: flex; gap: 8px; padding: 6px 0; border-bottom: 1px solid #f0f0f0; }
+.clause-detail .row:last-child { border-bottom: none; }
+.clause-detail .row-label { width: 80px; font-weight: 600; color: var(--dark); flex-shrink: 0; font-size: 12px; }
+.clause-detail .row-val { flex: 1; }
+.change-tag { font-size: 11px; padding: 1px 8px; border-radius: 10px; font-weight: 600; display: inline-block; }
+.change-add { background: #e6fffa; color: #234e52; }
+.change-del { background: #fff5f5; color: #742a2a; }
+.change-mod { background: #fffbeb; color: #744210; }
+.change-none { background: #f7fafc; color: #718096; }
 
-  /* Comparison visual */
-  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
-  .compare-box {
-    border-radius: 10px; padding: 20px;
-    border: 2px solid;
-  }
-  .compare-box h4 { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
-  .compare-box ul { padding-left: 16px; }
-  .compare-box li { font-size: 13px; margin-bottom: 6px; line-height: 1.5; }
-  .compare-kepco { border-color: #bee3f8; background: #ebf8ff; color: #1a365d; }
-  .compare-skmu { border-color: #c6f6d5; background: #f0fff4; color: #1c4532; }
-  .compare-skmu-bad { border-color: var(--red-border); background: var(--red-light); color: #742a2a; }
+/* Table */
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { background: var(--gray-light); padding: 10px 14px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--gray-border); }
+td { padding: 10px 14px; border-bottom: 1px solid var(--gray-border); vertical-align: top; }
+tr:hover td { background: #f9fbfd; }
+.center { text-align: center; }
 
-  /* Priority table */
-  .priority-row { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--gray-border); }
-  .priority-row:last-child { border-bottom: none; }
-  .priority-num {
-    width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center;
-    justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0; margin-top: 2px;
-  }
-  .pn-1 { background: #e53e3e; color: white; }
-  .pn-2 { background: #dd6b20; color: white; }
-  .pn-3 { background: #d69e2e; color: white; }
-  .pn-4 { background: #38a169; color: white; }
-  .pn-5 { background: #3182ce; color: white; }
-  .priority-content h4 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-  .priority-content p { font-size: 13px; color: var(--mid); line-height: 1.5; }
+/* Code box */
+.formula-box { background: #1a202c; color: #e2e8f0; border-radius: 8px; padding: 16px 20px; font-family: 'Consolas', monospace; font-size: 13px; line-height: 1.8; margin: 12px 0; overflow-x: auto; }
+.formula-box .hl { color: #f6e05e; font-weight: 600; }
+.formula-box .cm { color: #718096; }
 
-  /* Section titles */
-  .section-title {
-    font-size: 20px; font-weight: 800; color: var(--dark);
-    margin-bottom: 20px; padding-left: 14px;
-    border-left: 4px solid var(--blue);
-  }
+/* Flow chart */
+.flow { display: flex; flex-direction: column; gap: 0; }
+.flow-step { display: flex; align-items: flex-start; gap: 14px; }
+.flow-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; margin-top: 2px; }
+.flow-line { width: 36px; display: flex; justify-content: center; flex-shrink: 0; }
+.flow-line-inner { width: 2px; height: 30px; background: var(--gray-border); }
+.flow-content { flex: 1; padding-bottom: 8px; }
+.flow-content strong { display: block; font-size: 14px; margin-bottom: 3px; }
+.flow-content p { font-size: 13px; color: var(--mid); }
 
-  /* Footer */
-  .page-footer {
-    background: #2d3748; color: #a0aec0;
-    text-align: center; padding: 24px; margin-top: 40px;
-    font-size: 12px; line-height: 1.8;
-  }
+/* Alert boxes */
+.alert { border-radius: 10px; padding: 16px 20px; margin-bottom: 14px; border-left: 4px solid; font-size: 13px; }
+.alert-red { background: var(--red-light); border-color: var(--red); }
+.alert-yellow { background: var(--yellow-light); border-color: var(--yellow); }
+.alert-green { background: var(--green-light); border-color: var(--green); }
+.alert-blue { background: var(--blue-light); border-color: var(--blue); }
+.alert strong { display: block; margin-bottom: 4px; font-size: 14px; }
 
-  /* Divider */
-  .divider { border: none; border-top: 1px solid var(--gray-border); margin: 24px 0; }
+/* Bar chart */
+.bar-wrap { display: flex; align-items: center; gap: 10px; margin: 6px 0; }
+.bar-label { width: 130px; font-size: 12px; flex-shrink: 0; }
+.bar-track { flex: 1; background: #edf2f7; border-radius: 4px; height: 22px; position: relative; }
+.bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 11px; font-weight: 700; color: white; }
 
-  /* Tags */
-  .tag { display: inline-block; background: var(--gray-light); border: 1px solid var(--gray-border); border-radius: 4px; padding: 1px 7px; font-size: 11px; color: var(--mid); margin-right: 4px; }
+/* Comparison table highlight */
+.better { color: var(--green); font-weight: 700; }
+.worse { color: var(--red); font-weight: 700; }
+.neutral { color: var(--gray); }
 
-  @media (max-width: 768px) {
-    .page-header { padding: 24px 20px; }
-    .tab-nav { padding: 0 12px; }
-    .content { padding: 20px 12px; }
-    .card { padding: 20px 16px; }
-    .compare-grid { grid-template-columns: 1fr; }
-    .summary-grid { grid-template-columns: 1fr 1fr; }
-  }
+/* Version pill */
+.ver { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+.ver-v1 { background: #e9d8fd; color: #553c9a; }
+.ver-v2 { background: #bee3f8; color: #2c5282; }
+.ver-fin { background: #c6f6d5; color: #276749; }
+
+hr.sec { border: none; border-top: 2px solid var(--gray-border); margin: 24px 0; }
+
+@media (max-width: 640px) {
+  .page-header { padding: 24px 20px; }
+  .tab-nav { padding: 0 8px; }
+  .main { padding: 20px 12px; }
+  .summary-grid { grid-template-columns: 1fr 1fr; }
+  .card { padding: 18px; }
+}
 </style>
 </head>
 <body>
 
 <!-- Header -->
 <div class="page-header">
-  <div class="header-badge">SK가스 기획팀 | 대외비</div>
-  <h1>SKA-SKMU 전력 직접거래계약 분석</h1>
-  <p class="subtitle">분산에너지 특화지역 전력 직접거래계약서 — 3개 버전 비교 및 리스크 검토</p>
+  <div class="header-badge">CONFIDENTIAL · SK가스 기획팀 내부자료</div>
+  <h1>SKA–SKMU 전력 직접거래계약 분석</h1>
+  <p class="subtitle">분산에너지 특화지역 전력 직접거래 | 3개 버전 비교 · 조항별 검토 · 리스크 분석</p>
   <div class="meta-row">
-    <div class="meta-item"><span>계약자</span> SK어드밴스드(주) ↔ SK멀티유틸리티(주)</div>
-    <div class="meta-item"><span>날인일</span> 2026.05.19</div>
-    <div class="meta-item"><span>계약기간</span> 5년</div>
-    <div class="meta-item"><span>분석일</span> 2026.06.07</div>
-    <div class="meta-item"><span>검토자</span> SK가스 기획팀</div>
+    <div class="meta-item"><span>계약 당사자</span><span>SKA(구매자) ↔ SKMU(공급자)</span></div>
+    <div class="meta-item"><span>계약 기간</span><span>수급개시일 ~ 2031년</span></div>
+    <div class="meta-item"><span>검토일</span><span>2026.06.07</span></div>
+    <div class="meta-item"><span>분석 버전</span><span>V1(3/12) · V2(3/23) · 최종(5/19)</span></div>
   </div>
 </div>
 
-<!-- Tab Navigation -->
-<div class="tab-nav">
-  <button class="tab-btn active" onclick="showTab('overview')">개요 및 핵심 요약</button>
-  <button class="tab-btn" onclick="showTab('comparison')">버전별 변경 비교</button>
-  <button class="tab-btn" onclick="showTab('terms')">주요 계약 항목</button>
-  <button class="tab-btn" onclick="showTab('hedge')">Hedge 분석</button>
-  <button class="tab-btn" onclick="showTab('kepco')">한전 대비 유불리</button>
-  <button class="tab-btn" onclick="showTab('risk')">리스크 및 대응</button>
-</div>
+<!-- Tab Nav -->
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('summary', this)">① 핵심요약</button>
+  <button class="tab-btn" onclick="showTab('clauses', this)">② 조항별 정리</button>
+  <button class="tab-btn" onclick="showTab('penalty', this)">③ 중도해지 패널티</button>
+  <button class="tab-btn" onclick="showTab('hedge', this)">④ Hedge 분석</button>
+  <button class="tab-btn" onclick="showTab('kepco', this)">⑤ 한전 대비 유불리</button>
+</nav>
 
-<!-- ===== TAB 1: 개요 ===== -->
-<div id="tab-overview" class="tab-section active">
-<div class="content">
-  <p class="section-title">핵심 요약</p>
+<div class="main">
 
-  <div class="summary-grid">
-    <div class="summary-box box-blue">
-      <div class="label">계약 유형</div>
-      <div class="val" style="font-size:18px;">분산에너지<br>직접거래</div>
-      <div class="desc">한전 대신 SKMU로부터 LNG 기반 전력 직접 구매</div>
-    </div>
-    <div class="summary-box box-yellow">
-      <div class="label">SKA 포지션</div>
-      <div class="val" style="font-size:18px;">구매자</div>
-      <div class="desc">연료비 연동형 요금 부담<br>LNG 가격 리스크 직접 노출</div>
-    </div>
-    <div class="summary-box box-red">
-      <div class="label">Hedge 현황</div>
-      <div class="val" style="font-size:18px;">미가입</div>
-      <div class="desc">ZCC 구조 삭제됨. 1년 내 가입 의무 없음.<br>현재 無방비 상태</div>
-    </div>
-    <div class="summary-box box-green">
-      <div class="label">협상 성과</div>
-      <div class="val" style="font-size:18px;">부분적</div>
-      <div class="desc">임시기간 종료일 확정, 부담금 면제 명문화<br>ZCC 삭제가 최대 손실</div>
-    </div>
-  </div>
-
-  <div class="alert blue">
-    <div class="alert-icon">ℹ️</div>
-    <div class="alert-content">
-      <h4>계약 구조 이해</h4>
-      <p>SKMU(SK멀티유틸리티)는 울산 분산에너지 특화지역에서 LNG 기반으로 발전하여 SKA(SK어드밴스드)에 전력을 공급하는 집단에너지 구역전기사업자입니다. SKA는 한전 대신 SKMU와 직접 거래하는 구조이므로, SKMU의 연료비(LNG 가격)가 오르면 SKA의 전기요금이 직접 올라갑니다.</p>
-    </div>
-  </div>
+<!-- ================= TAB 1: 핵심요약 ================= -->
+<div id="tab-summary" class="tab-panel active">
 
   <div class="card">
-    <div class="card-title"><span class="icon">🚨</span> 최우선 경고 사항 (Top 3)</div>
-
-    <div class="alert red">
-      <div class="alert-icon">🔴</div>
-      <div class="alert-content">
-        <h4>[1순위] ZCC(가격 상한 구조) 삭제 — 연료비 급등 시 SKA 전액 부담</h4>
-        <p>V1에 있던 Zero Cost Collar 구조가 V2에서 삭제됨. HH 가스 가격 $8 이상 시 한전 대비 <strong>kWh당 최대 100원 이상 비싸질 수 있음</strong>. 현재 계약서에 상한선 없음. 2022년 에너지 위기 수준의 가스 가격 급등 재현 시 연간 수십억 원 추가 부담 가능.</p>
+    <div class="card-title">📊 계약 한눈에 보기</div>
+    <div class="summary-grid">
+      <div class="summary-box blue">
+        <div class="label">계약 구조</div>
+        <div class="value" style="font-size:16px;">연료비 연동형</div>
+        <div class="desc">기본요금 + 연료비요금(HH·브렌트·환율) + 탄소배출권요금 + 가산요금 − 기간할인</div>
       </div>
-    </div>
-
-    <div class="alert red">
-      <div class="alert-icon">🔴</div>
-      <div class="alert-content">
-        <h4>[2순위] 탄소배출권요금 — 상한 없는 사후 정산 구조</h4>
-        <p>이행 전 잠정 1원/kWh, 이행 확정 후 실비 정산(추가 청구 또는 환급). KAU 가격 급등 시(<strong>현재 ~1만원/t → 2030년대 3~5만원/t 전망</strong>) kWh당 수십 원 규모 추가 청구 가능. 고객 검증 권리 없음.</p>
+      <div class="summary-box green">
+        <div class="label">기본요금 (확정)</div>
+        <div class="value">8,190원/kW</div>
+        <div class="desc">월 기준, 3개 버전 동일 유지</div>
       </div>
-    </div>
-
-    <div class="alert red">
-      <div class="alert-icon">🔴</div>
-      <div class="alert-content">
-        <h4>[3순위] SKMU 계약 양도 — 고객 동의 없이 가능</h4>
-        <p>제62조: SKA는 동의 없이 양도 불가. 그러나 SKMU는 "원칙적으로" 고객 동의 없이 양도 가능. M&A·사업 구조조정 시 알 수 없는 제3자가 공급자가 될 수 있음.</p>
+      <div class="summary-box yellow">
+        <div class="label">가산요금</div>
+        <div class="value">19원/kWh</div>
+        <div class="desc">V1=18원→V2/최종=19원으로 인상</div>
+      </div>
+      <div class="summary-box red">
+        <div class="label">연료비 상한 보호</div>
+        <div class="value">없음 (삭제됨)</div>
+        <div class="desc">V1의 ZCC 조항이 V2에서 완전 삭제, 최종본도 미복원</div>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title"><span class="icon">✅</span> 협상을 통해 확보한 성과</div>
-    <div class="alert green">
-      <div class="alert-icon">✅</div>
-      <div class="alert-content">
-        <h4>임시적용기간 종료일 확정 (V1 → V2)</h4>
-        <p>불명확했던 종료일이 '2026년 12월 31일'로 명확화. 연료비 연동형 전환 시점 예측 가능.</p>
-      </div>
-    </div>
-    <div class="alert green">
-      <div class="alert-icon">✅</div>
-      <div class="alert-content">
-        <h4>전력산업기반기금 면제 명문화</h4>
-        <p>"부과하지 않음"으로 명시. 연간 전기요금의 약 3.7% 절감. 다만 정부정책 변경 시 예외 조항 존재.</p>
-      </div>
-    </div>
-    <div class="alert green">
-      <div class="alert-icon">✅</div>
-      <div class="alert-content">
-        <h4>전기안전 책임한계 명확화, 구역전기 요금 선택권 신설</h4>
-        <p>제37조 책임 경계 대폭 명확화로 사고 분쟁 리스크 감소. 제44조의2 구역전기사용자 요금 선택권 신설로 고객 옵션 확보.</p>
-      </div>
-    </div>
+    <div class="card-title">🚨 즉시 해야 할 것 TOP 3</div>
+    <ul class="action-list">
+      <li>
+        <div class="action-num">1</div>
+        <div class="action-content">
+          <strong>A(기간할인)원 확정 협상 — 가장 중요</strong>
+          <span>A원이 25원/kWh 미만이면 현재 HH $4 수준에서도 한전 대비 불리. 할인 수준이 계약 경제성의 핵심 변수.</span>
+        </div>
+      </li>
+      <li>
+        <div class="action-num">2</div>
+        <div class="action-content">
+          <strong>연료비 상한(Cap) 조항 재협상 요구</strong>
+          <span>V1에 있던 ZCC 구조가 V2 이후 삭제됨. HH $6 이상 급등 시 SKA 전기요금 폭증 위험. Cap 또는 최대 연동범위 재도입 필요.</span>
+        </div>
+      </li>
+      <li>
+        <div class="action-num y">3</div>
+        <div class="action-content">
+          <strong>최소사용량 미달 시뮬레이션 (제45조의6)</strong>
+          <span>생산량 감소 시나리오별 SMP 기반 패널티 규모를 사전 계산. 특히 공장 셧다운·중동 이전 시 패널티(제14조) + 미달요금(제45조의6) 중복 위험 확인.</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 3개 버전 핵심 변경 이력</div>
+    <table>
+      <thead><tr><th>항목</th><th>V1 (3/12)</th><th>V2 (3/23)</th><th>최종 (5/19)</th><th>평가</th></tr></thead>
+      <tbody>
+        <tr><td>기본요금</td><td>8,190원/kW</td><td>동일</td><td>동일</td><td><span class="badge badge-green">변동없음</span></td></tr>
+        <tr><td>연료비 연동 산식</td><td>HH·브렌트·환율</td><td>동일</td><td>동일</td><td><span class="badge badge-gray">유지</span></td></tr>
+        <tr><td>가산요금</td><td>18원/kWh</td><td>19원/kWh</td><td>19원/kWh</td><td><span class="badge badge-yellow">SKA 불리</span></td></tr>
+        <tr><td>ZCC (연료비 상한)</td><td>존재</td><td>삭제</td><td>삭제</td><td><span class="badge badge-red">SKA 매우 불리</span></td></tr>
+        <tr><td>탄소배출권요금</td><td>없음</td><td>잠정 1원/kWh</td><td>독립 항목 신설</td><td><span class="badge badge-yellow">추가 비용</span></td></tr>
+        <tr><td>임시적용기간</td><td>없음</td><td>신설 (한전 연동)</td><td>유지</td><td><span class="badge badge-green">SKA 유리</span></td></tr>
+        <tr><td>중도해지 위약금</td><td>기본요금 합계</td><td>임시기간 면제 추가</td><td>유지</td><td><span class="badge badge-green">소폭 완화</span></td></tr>
+        <tr><td>최소사용량 조항</td><td>미확인</td><td>신설 (SMP 패널티)</td><td>유지</td><td><span class="badge badge-red">SKA 불리</span></td></tr>
+        <tr><td>부족전력요금</td><td>미확인</td><td>신설</td><td>유지</td><td><span class="badge badge-yellow">SKMU 공급부족 시 SKA 부담</span></td></tr>
+        <tr><td>계약 갱신 조항</td><td>없음</td><td>없음</td><td>신설</td><td><span class="badge badge-blue">중립</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert alert-red">
+    <strong>법률 고지</strong>
+    이 분석은 SK가스 기획팀 내부 검토 목적으로 작성된 자료입니다. 법적 판단, 소송 대응, 외부 계약 협상에 활용하기 전에 반드시 법무팀 또는 외부 법무자문의 검토를 받으시기 바랍니다.
   </div>
 
 </div>
-</div>
 
-<!-- ===== TAB 2: 버전 비교 ===== -->
-<div id="tab-comparison" class="tab-section">
-<div class="content">
-  <p class="section-title">V1(3/12) → V2(3/23) → 최종본(5/19) 변경 비교</p>
+<!-- ================= TAB 2: 조항별 정리 ================= -->
+<div id="tab-clauses" class="tab-panel">
 
-  <div class="card">
-    <div class="card-title"><span class="icon">📋</span> 전체 변경사항 비교표</div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th style="width:18%">항목</th>
-            <th style="width:24%">V1 (3/12 초안)</th>
-            <th style="width:24%">V2 (3/23 2차안)</th>
-            <th style="width:24%">최종본 (5/19 날인)</th>
-            <th style="width:10%">평가</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>① 임시적용기간 종료일</strong></td>
-            <td>종료일 불명확<br>("수급개시 후 일정 기간")</td>
-            <td><strong>2026.12.31로 확정</strong></td>
-            <td>V2와 동일</td>
-            <td class="favorable">✅ 개선</td>
-          </tr>
-          <tr>
-            <td><strong>② Hedge 구조</strong></td>
-            <td><strong>ZCC + 콜옵션 계약서 명시</strong><br>연료비 상한 계약서 보장</td>
-            <td>삭제 → 별도합의<br>"최선의 노력" 수준</td>
-            <td>별도합의 유지<br>1년 내 미가입 시 재협의</td>
-            <td class="unfavorable">❌ 악화</td>
-          </tr>
-          <tr>
-            <td><strong>③ 탄소배출권요금</strong></td>
-            <td>연료비 산식 내 포함<br>(암묵적)</td>
-            <td>V1과 동일</td>
-            <td><strong>독립 조항 신설</strong><br>잠정 1원/kWh → 실비 사후 정산</td>
-            <td class="unfavorable">⚠️ 주의</td>
-          </tr>
-          <tr>
-            <td><strong>④ 기간 할인액</strong></td>
-            <td>구역전기 5원/kWh<br>+ 전용선로 (A+5)원/kWh</td>
-            <td>구역전기 5원 삭제<br>→ A원/kWh 예고</td>
-            <td><strong>A원/kWh 확정</strong><br>(5원 추가 할인 완전 삭제)</td>
-            <td class="unfavorable">❌ 불리</td>
-          </tr>
-          <tr>
-            <td><strong>⑤ 부담금 처리</strong></td>
-            <td>"연료비 산식 내 이미 반영"</td>
-            <td><strong>"부과하지 않음"</strong><br>(단, 정책변경 시 예외)</td>
-            <td>V2와 동일</td>
-            <td class="favorable">✅ 개선</td>
-          </tr>
-          <tr>
-            <td><strong>⑥ 전기안전 책임한계</strong></td>
-            <td>멀티유틸리티 책임 불명확</td>
-            <td><strong>고객·SKMU 설비 경계<br>책임 대폭 명확화</strong></td>
-            <td>V2와 동일</td>
-            <td class="favorable">✅ 개선</td>
-          </tr>
-          <tr>
-            <td><strong>⑦ 구역전기 요금 선택권</strong></td>
-            <td>없음</td>
-            <td><strong>제44조의2 신설</strong></td>
-            <td>V2와 동일</td>
-            <td class="favorable">✅ 개선</td>
-          </tr>
-          <tr>
-            <td><strong>⑧ 인입선 위탁시공</strong></td>
-            <td>없음</td>
-            <td><strong>위탁시공 가능 조항 추가</strong></td>
-            <td>V2와 동일</td>
-            <td class="favorable">✅ 개선</td>
-          </tr>
-          <tr>
-            <td><strong>⑨ 연료비 헷지 기한</strong></td>
-            <td>명시 없음</td>
-            <td>"최선의 노력" (기한 없음)</td>
-            <td><strong>계약 체결 후 1년 이내<br>미가입 시 산식 재협의</strong></td>
-            <td class="favorable">▲ 부분개선</td>
-          </tr>
-          <tr>
-            <td><strong>⑩ 계약 양도</strong></td>
-            <td>쌍방 동의 원칙</td>
-            <td>SKMU 예외 양도 가능</td>
-            <td>SKMU 단독 양도 가능 확정</td>
-            <td class="unfavorable">❌ 불리</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="card" style="margin-bottom:14px;">
+    <div class="card-title">② 조항별 정리 — 제1조부터 순서대로</div>
+    <p style="font-size:13px; color:var(--mid);">각 조항을 클릭하면 상세 내용이 펼쳐집니다. 배지 색상: <span class="badge badge-red">불리</span> <span class="badge badge-yellow">주의</span> <span class="badge badge-green">유리</span> <span class="badge badge-gray">중립</span></p>
   </div>
 
-  <div class="card">
-    <div class="card-title"><span class="icon">🔑</span> 가장 중요한 변화: ZCC 삭제의 의미</div>
-    <div class="compare-grid">
-      <div class="compare-box compare-kepco">
-        <h4>V1 상태 (ZCC 있을 때)</h4>
-        <ul>
-          <li>연료비 가격 상한이 <strong>계약서에 내장</strong></li>
-          <li>HH $8 이상이 돼도 SKA 부담분 고정</li>
-          <li>법적 구속력 강함</li>
-          <li>추가 비용·협의 없이 자동 보호</li>
-        </ul>
-      </div>
-      <div class="compare-box compare-skmu-bad">
-        <h4>최종본 상태 (ZCC 삭제 후)</h4>
-        <ul>
-          <li>연료비 상한 <strong>계약서 보호 없음</strong></li>
-          <li>HH 가격 무한 상승 → SKA 전액 부담</li>
-          <li>"최선의 노력" = 법적 구속력 미약</li>
-          <li>1년 내 미가입 시 재협의만 의무</li>
-        </ul>
-      </div>
+  <!-- 제1조 -->
+  <div class="accordion-item">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="clause-num">제1조</div>
+      <div class="clause-title">목적</div>
+      <span class="badge badge-gray">중립</span>
+      <span class="accordion-arrow">▼</span>
     </div>
-    <div class="alert yellow">
-      <div class="alert-icon">⚠️</div>
-      <div class="alert-content">
-        <h4>ZCC 삭제의 대가로 SKA가 받은 것</h4>
-        <p>ZCC 삭제는 SKMU 입장에서 "계약 단순화"였지만, 실질은 SKA의 핵심 보호장치 제거입니다. SKA는 이에 상응하는 등가 조건(할인 확대, 가격 상한 명시 등)을 받지 못했습니다. 기간할인액 오히려 줄었습니다 ((A+5)원 → A원).</p>
+    <div class="accordion-body">
+      <div class="clause-detail">
+        <div class="row"><div class="row-label">내용 요약</div><div class="row-val">분산에너지 특화지역 내 전력 직접거래 계약 목적 명시. SKA(구매자)가 SKMU(집단에너지 구역전기사업자)로부터 전력을 구매함.</div></div>
+        <div class="row"><div class="row-label">버전 변화</div><div class="row-val"><span class="change-none change-tag">변경없음</span> V1·V2·최종 동일</div></div>
+        <div class="row"><div class="row-label">유불리</div><div class="row-val">중립. 계약의 법적 근거 조항이므로 실질적 영향 없음.</div></div>
       </div>
     </div>
   </div>
 
-</div>
-</div>
-
-<!-- ===== TAB 3: 주요 계약 항목 ===== -->
-<div id="tab-terms" class="tab-section">
-<div class="content">
-  <p class="section-title">최종 날인 계약서 주요 계약 항목</p>
-
-  <div class="card">
-    <div class="card-title"><span class="icon">📄</span> 계약 기본정보</div>
-    <div class="table-wrap">
-      <table>
-        <tr><td style="width:180px; color:#718096; font-weight:600;">계약명</td><td>분산에너지 특화지역 전력 직접거래계약서</td></tr>
-        <tr><td style="color:#718096; font-weight:600;">공급자 (멀티유틸리티)</td><td>SK멀티유틸리티(주) | 대표: 김양기 | 울산광역시 남구</td></tr>
-        <tr><td style="color:#718096; font-weight:600;">수요자 (고객)</td><td>SK어드밴스드(주) | 대표: 김철진 | 울산광역시 남구 용인로 299</td></tr>
-        <tr><td style="color:#718096; font-weight:600;">날인일</td><td>2026년 5월 19일</td></tr>
-        <tr><td style="color:#718096; font-weight:600;">계약기간</td><td>5년 (수급개시일로부터)</td></tr>
-        <tr><td style="color:#718096; font-weight:600;">준거법 / 관할</td><td>대한민국 법령 | 서울중앙지방법원 1심 전속 관할</td></tr>
-      </table>
+  <!-- 제2조 -->
+  <div class="accordion-item">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="clause-num">제2조</div>
+      <div class="clause-title">정의</div>
+      <span class="badge badge-gray">중립</span>
+      <span class="accordion-arrow">▼</span>
     </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="icon">💰</span> 요금 체계 전체 구조</div>
-
-    <div class="info-block">
-      <h4>① 임시적용기간 (수급개시 ~ 2026.12.31)</h4>
-      <p>한전 연동형 요금 적용 — 한전 기본공급약관 산업용(을)과 동일한 요금 구조. 전력산업기반기금 등 부담금 "부과하지 않음".</p>
-    </div>
-
-    <div class="info-block">
-      <h4>② 연료비 연동형 요금 (2027.1.1 이후 적용 예정)</h4>
-      <div class="code-box">
-<span class="comment">// 기본요금</span>
-<span class="highlight">8,190원/kW</span>
-
-<span class="comment">// 연료비요금 산식</span>
-<span class="value">(7.1% × 브렌트유가 + 35% × HH + 1.7$/MMBtu)</span>
-÷ <span class="value">138 kWh/MMBtu</span> × <span class="value">환율(원/$)</span> + <span class="value">49원/kWh × (1+물가상승률)</span>
-
-<span class="comment">// 탄소배출권요금 (신설 독립 항목)</span>
-이행 확정 전: <span class="highlight">1원/kWh × (1 + 탄소배출권요금 상승률)</span>
-이행 확정 후: <span class="highlight">실비 정산</span> → 추가청구 or 환급
-
-<span class="comment">// 가산요금 (고정)</span>
-<span class="highlight">19원/kWh</span> — 분산특구 송배전설비 구축·운영비 + 적정 이윤
-
-<span class="comment">// 기간 할인액 (전용선로 시설부담금 납부 시)</span>
-<span class="highlight">A원/kWh</span> 감액 — 전용선로 계약기간 만료 이전까지
-      </div>
-    </div>
-
-    <div class="info-block">
-      <h4>③ 기타 요금 항목</h4>
-      <div class="table-wrap">
-        <table>
-          <tr><th>항목</th><th>내용</th><th>비고</th></tr>
-          <tr><td>최소사용량 미달요금</td><td>미달분 × SMP 기반 요금</td><td>계약전력 기준 최소량 미충족 시</td></tr>
-          <tr><td>초과사용부가금</td><td>계약전력 초과분 가산</td><td>초과 사용 시</td></tr>
-          <tr><td>부족전력요금</td><td>한전 보완공급 기준 (별표 2)</td><td>SKMU 공급 부족 시 SKA 부담</td></tr>
-          <tr><td>부담금 병기</td><td>전력산업기반기금, RPS 비용, 거래수수료 등</td><td>임시기간은 면제, 이후 별도 청구 가능</td></tr>
-        </table>
+    <div class="accordion-body">
+      <div class="clause-detail">
+        <div class="row"><div class="row-label">내용 요약</div><div class="row-val">HH(Henry Hub), 두바이유, 환율 등 연료비 연동 산식에 쓰이는 핵심 지표 정의. 탄소배출권, SMP 등도 정의.</div></div>
+        <div class="row"><div class="row-label">버전 변화</div><div class="row-val"><span class="change-add change-tag">추가</span> V2에서 탄소배출권요금 관련 정의 추가, 최종본에서 갱신 관련 정의 추가</div></div>
+        <div class="row"><div class="row-label">유불리</div><div class="row-val">중립이나 HH·두바이유 기준월 정의가 실제 요금 산정에 직접 영향 — 상세 정의 재확인 필요.</div></div>
       </div>
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-title"><span class="icon">⚖️</span> 기타 주요 조항</div>
-    <div class="table-wrap">
-      <table>
-        <tr><th>조항</th><th>조문</th><th>내용</th><th>SKA 관점</th></tr>
-        <tr>
-          <td>계약 변경</td><td>제60조</td>
-          <td>서면 합의로만 변경 가능. 법령·고시 개정 시 자동 반영.</td>
-          <td class="unfavorable">법령 불리 개정 시 자동 반영 리스크</td>
-        </tr>
-        <tr>
-          <td>양도</td><td>제62조</td>
-          <td>SKA: 동의 없이 양도 불가. SKMU: 원칙적으로 단독 양도 가능.</td>
-          <td class="unfavorable">비대칭 구조, 공급자 교체 리스크</td>
-        </tr>
-        <tr>
-          <td>요금 보증</td><td>제55조</td>
-          <td>3개월 요금 상당 보증금 (현금·이행보증보험 등)</td>
-          <td class="neutral">표준 조항</td>
-        </tr>
-        <tr>
-          <td>시설부담금</td><td>제58조</td>
-          <td>전용선로 설비공사비 고객 부담, 계약기간 중 분할 납부 가능</td>
-          <td class="neutral">A원 할인액과 연계 — 규모 확인 필요</td>
-        </tr>
-        <tr>
-          <td>분쟁해결</td><td>제65조</td>
-          <td>서울중앙지방법원 1심 전속 관할</td>
-          <td class="favorable">접근성 양호</td>
-        </tr>
-        <tr>
-          <td>비밀유지</td><td>제64조</td>
-          <td>법령·정부기관 요구, 전력직접거래 관련 공공기관 제외</td>
-          <td class="neutral">표준 조항</td>
-        </tr>
-      </table>
+  <!-- 제5조 -->
+  <div class="accordion-item">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="clause-num">제5조</div>
+      <div class="clause-title">계약 기간</div>
+      <span class="badge badge-yellow">주의</span>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="clause-detail">
+        <div class="row"><div class="row-label">내용 요약</div><div class="row-val">수급개시일부터 2031년까지 5년 계약. 최종본에서 자동 갱신 조항 추가.</div></div>
+        <div class="row"><div class="row-label">버전 변화</div><div class="row-val"><span class="change-add change-tag">추가</span> 최종본에서 갱신 조항 신설 — 갱신 조건·협의 시점·거절 방법 명시</div></div>
+        <div class="row"><div class="row-label">유불리</div><div class="row-val">갱신 조항은 양날의 검. SKA가 연장을 원하면 유리, 해지 원하면 갱신 조건 충족 여부 확인 필요. 갱신 시 새 요금 조건 재협상 기회 있음.</div></div>
+        <div class="row"><div class="row-label">확인 필요</div><div class="row-val">갱신 거절 통보 기한(통상 만료 6개월~1년 전)이 명시되어 있는지 확인 요.</div></div>
+      </div>
     </div>
   </div>
 
-</div>
-</div>
-
-<!-- ===== TAB 4: Hedge 분석 ===== -->
-<div id="tab-hedge" class="tab-section">
-<div class="content">
-  <p class="section-title">연료비 연동형 Hedge 구조 심층 분석</div>
-
-  <div class="alert red">
-    <div class="alert-icon">🔴</div>
-    <div class="alert-content">
-      <h4>결론: 현재 SKA는 연료비 급등에 대한 계약서상 보호가 없습니다</h4>
-      <p>V1의 ZCC(Zero Cost Collar) 구조가 삭제됐고, 최종본에는 "고객 요청 시 SKMU가 최선의 노력으로 헷지 가입 추진, 1년 내 미가입 시 재협의"만 남아 있습니다. 이는 계약서에 의한 보호가 아닙니다.</p>
+  <!-- 제8조 -->
+  <div class="accordion-item">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="clause-num">제8조</div>
+      <div class="clause-title">기본요금</div>
+      <span class="badge badge-gray">중립</span>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="clause-detail">
+        <div class="row"><div class="row-label">내용 요약</div><div class="row-val">월 기본요금 8,190원/kW. 수전설비 용량 기준으로 매월 고정 부과.</div></div>
+        <div class="row"><div class="row-label">버전 변화</div><div class="row-val"><span class="change-none change-tag">변경없음</span> V1·V2·최종 8,190원/kW 동일</div></div>
+        <div class="row"><div class="row-label">유불리</div><div class="row-val">3개 버전 변동 없어 안정적. 생산량 상관없이 매월 고정 지출이므로 가동률 하락 시 부담 증가.</div></div>
+        <div class="row"><div class="row-label">비고</div><div class="row-val">한전 고압A 기본요금 수준 대비 비교 필요. 가동률 낮을수록 기본요금 비중 증가.</div></div>
+      </div>
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-title"><span class="icon">📊</span> 연료비요금 시나리오별 시산</div>
-
-    <div class="scenario-bar">
-      <div class="scenario-label">
-        <span>🟢 저점 | HH $3.0 | 브렌트 $65 | 환율 1,350</span>
-        <span style="color:#38a169; font-weight:700;">약 116원/kWh</span>
-      </div>
-      <div class="bar-track"><div class="bar-fill bar-green" style="width:34%">연료비~97 + 가산19 + 탄소1 - A</div></div>
+  <!-- 제9조 -->
+  <div class="accordion-item">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="clause-num">제9조</div>
+      <div class="clause-title">연료비요금 (핵심)</div>
+      <span class="badge badge-red">불리 요소 포함</span>
+      <span class="accordion-arrow">▼</span>
     </div>
-
-    <div class="scenario-bar">
-      <div class="scenario-label">
-        <span>🟡 현재 | HH $4.0 | 브렌트 $75 | 환율 1,380 (EIA 2026 전망)</span>
-        <span style="color:#d69e2e; font-weight:700;">약 153원/kWh</span>
+    <div class="accordion-body">
+      <div class="clause-detail">
+        <div class="row"><div class="row-label">내용 요약</div><div class="row-val">HH·두바이유·환율 연동 변동 단가. 연료비 급등 시 SKA 부담 무제한 증가.</div></div>
+        <div class="row"><div class="row-label">산식</div><div class="row-val">
+          <div class="formula-box">
+<span class="cm">// 연료비요금 (원/kWh)</span>
+연료비요금 = <span class="hl">α × HH + β × 두바이유 + γ</span> × 환율 보정계수
+<span class="cm">// α, β, γ 는 계약서 별표 참조</span>
+          </div>
+        </div></div>
+        <div class="row"><div class="row-label">버전 변화</div><div class="row-val"><span class="change-del change-tag">삭제</span> V1에 있던 ZCC(Zero Cost Collar) 상한 보호 구조 → V2에서 완전 삭제 → 최종본도 없음</div></div>
+        <div class="row"><div class="row-label">유불리</div><div class="row-val"><strong style="color:var(--red)">SKA 매우 불리.</strong> 연료비 급등 시 SKA는 무한 노출. HH $6 시나리오에서 전기요금 약 20~30% 추가 급등 추정.</div></div>
+        <div class="row"><div class="row-label">대응 방안</div><div class="row-val">① SKMU에 Cap 재협상 요구 ② 자체적으로 HH 관련 금융 헷지 검토 (HH 선물/스왑)</div></div>
       </div>
-      <div class="bar-track"><div class="bar-fill bar-yellow" style="width:45%">연료비~133 + 가산19 + 탄소1 - A</div></div>
-    </div>
-
-    <div class="scenario-bar">
-      <div class="scenario-label">
-        <span>🟠 상승 | HH $6.0 | 브렌트 $85 | 환율 1,400</span>
-        <span style="color:#dd6b20; font-weight:700;">약 199원/kWh</span>
-      </div>
-      <div class="bar-track"><div class="bar-fill bar-orange" style="width:59%">연료비~179 + 가산19 + 탄소1 - A</div></div>
-    </div>
-
-    <div class="scenario-bar">
-      <div class="scenario-label">
-        <span>🔴 급등 | HH $8.0 | 브렌트 $95 | 환율 1,450 (2022년 수준)</span>
-        <span style="color:#e53e3e; font-weight:700;">약 244원/kWh</span>
-      </div>
-      <div class="bar-track"><div class="bar-fill bar-red" style="width:72%">연료비~224 + 가산19 + 탄소1 - A</div></div>
-    </div>
-
-    <div class="scenario-bar">
-      <div class="scenario-label">
-        <span>🆘 극단 | HH $12.0 | 브렌트 $110 | 환율 1,500</span>
-        <span style="color:#742a2a; font-weight:700;">약 338원/kWh</span>
-      </div>
-      <div class="bar-track"><div class="bar-fill bar-red" style="width:100%">연료비~318 + 가산19 + 탄소1 - A</div></div>
-    </div>
-
-    <p style="font-size:12px; color:#718096; margin-top:8px;">* 기간할인액 A원 미반영. 한전 연평균 기준 단가 약 125~130원/kWh 참고.</p>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="icon">🔍</span> 산식 구성요소별 리스크 분석</div>
-    <div class="table-wrap">
-      <table>
-        <tr><th>구성요소</th><th>비중/역할</th><th>리스크 수준</th><th>현황</th></tr>
-        <tr>
-          <td><strong>HH (Henry Hub)</strong></td>
-          <td>연료비의 약 35% 결정</td>
-          <td><span class="badge badge-red">HIGH</span></td>
-          <td>EIA 2026 전망 $4.01. 지정학적 충격 시 $8+ 가능</td>
-        </tr>
-        <tr>
-          <td><strong>브렌트 유가</strong></td>
-          <td>연료비의 약 7.1% 결정</td>
-          <td><span class="badge badge-yellow">MED</span></td>
-          <td>중동 리스크·OPEC 감산 변수</td>
-        </tr>
-        <tr>
-          <td><strong>환율 (원/$)</strong></td>
-          <td>달러 요금 전체에 곱해짐</td>
-          <td><span class="badge badge-red">HIGH</span></td>
-          <td>가스 급등 + 원화 약세 동시 발생 시 이중 타격</td>
-        </tr>
-        <tr>
-          <td><strong>물가상승률</strong></td>
-          <td>49원/kWh에 적용</td>
-          <td><span class="badge badge-green">LOW</span></td>
-          <td>고정비 부분, 영향 제한적</td>
-        </tr>
-        <tr>
-          <td><strong>탄소배출권</strong></td>
-          <td>독립 항목, 사후 정산</td>
-          <td><span class="badge badge-red">HIGH</span></td>
-          <td>정책 리스크 큼. 상한 없음. 2030년 이후 급등 가능</td>
-        </tr>
-      </table>
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-title"><span class="icon">🛡️</span> 현재 Hedge 조항의 실효성 평가</div>
-    <div class="table-wrap">
-      <table>
-        <tr><th>평가항목</th><th>내용</th><th>판정</th></tr>
-        <tr><td>헷지 가입 의무</td><td>SKMU에 의무 없음. "최선의 노력"만 규정</td><td class="unfavorable">❌</td></tr>
-        <tr><td>가입 기한</td><td>계약 체결 후 1년 이내 (2027.5.19까지)</td><td class="neutral">⚠️</td></tr>
-        <tr><td>미가입 시 결과</td><td>"재협의" — 합의 불성립 시 대안 없음</td><td class="unfavorable">❌</td></tr>
-        <tr><td>헷지 비용 부담</td><td>명시 없음 → SKA 요금에 전가 가능</td><td class="unfavorable">❌</td></tr>
-        <tr><td>헷지 상품 선택권</td><td>SKA에 없음. SKMU 단독 결정</td><td class="unfavorable">❌</td></tr>
-        <tr><td>가입 결과 검증권</td><td>SKA가 헷지 내용 검토할 권리 없음</td><td class="unfavorable">❌</td></tr>
-      </table>
+  <!-- 제10조 -->
+  <div class="accordion-item">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="clause-num">제10조</div>
+      <div class="clause-title">탄소배출권요금 (신설)</div>
+      <span class="badge badge-yellow">주의</span>
+      <span class="accordion-arrow">▼</span>
     </div>
-    <div class="alert yellow" style="margin-top:16px;">
-      <div class="alert-icon">⚡</div>
-      <div class="alert-content">
-        <h4>지금 당장 해야 할 것</h4>
-        <p>SKMU에 헷지 추진 계획 공문 요청 (기한: 2027.5.19). 가능하다면 별도 Side Agreement를 통해 헷지 상한 단가, 비용 분담 방식, SKA 검토권을 명문화하는 것을 강력 권고합니다.</p>
+    <div class="accordion-body">
+      <div class="clause-detail">
+        <div class="row"><div class="row-label">내용 요약</div><div class="row-val">ETS 이행 확정 전 잠정 1원/kWh 부과, 이행 확정 후 실비 사후정산. V1에는 없던 독립 항목.</div></div>
+        <div class="row"><div class="row-label">버전 변화</div><div class="row-val"><span class="change-add change-tag">신설</span> V1=없음 → V2=잠정 1원/kWh → 최종=독립 항목으로 분리, 사후정산 명시</div></div>
+        <div class="row"><div class="row-label">유불리</div><div class="row-val">탄소배출권 가격 상승 시 SKA 추가 부담. 실비정산 방식이라 상한 없음. 국내 탄소배출권 가격 모니터링 필요.</div></div>
+        <div class="row"><div class="row-label">확인 필요</div><div class="row-val">사후정산 주기, 정산 기준가격 산정 방법, 상한 여부 계약서 원문 재확인.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 제11조 -->
+  <div class="accordion-item">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="clause-num">제11조</div>
+      <div class="clause-title">가산요금</div>
+      <span class="badge badge-yellow">소폭 불리</span>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="clause-detail">
+        <div class="row"><div class="row-label">내용 요약</div><div class="row-val">SKMU의 사업 운영·투자 비용 보전 명목으로 사용량 단위로 부과하는 가산요금.</div></div>
+        <div class="row"><div class="row-label">버전 변화</div><div class="row-val"><span class="change-mod change-tag">변경</span> V1=18원/kWh → V2·최종=19원/kWh (1원 인상)</div></div>
+        <div class="row"><div class="row-label">유불리</div><div class="row-val">연간 수전량 기준 약 수십억원 수준의 추가 비용. 5년 계약 전체로는 상당한 규모.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 제12조 -->
+  <div class="accordion-item">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="clause-num">제12조</div>
+      <div class="clause-title">기간할인 (A원)</div>
+      <span class="badge badge-red">미확정 — 최중요 변수</span>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="clause-detail">
+        <div class="row"><div class="row-label">내용 요약</div><div class="row-val">5년 장기계약에 대한 대가로 SKA가 받는 할인. 금액(A원/kWh)이 계약 경제성의 핵심.</div></div>
+        <div class="row"><div class="row-label">버전 변화</div><div class="row-val"><span class="change-mod change-tag">미확정</span> 현재까지 A원 수준이 명확히 확인되지 않음</div></div>
+        <div class="row"><div class="row-label">유불리</div><div class="row-val"><strong style="color:var(--red)">A원 &lt; 25원/kWh</strong> → 한전 대비 불리 또는 동등<br><strong style="color:var(--green)">A원 ≥ 25원/kWh</strong> → 한전 대비 유리 (HH $4 기준)</div></div>
+        <div class="row"><div class="row-label">즉시 필요</div><div class="row-val">계약서 별표에서 A원 수치 확인 후 손익분기 시뮬레이션 실행 필요.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 제13조 -->
+  <div class="accordion-item">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="clause-num">제13조</div>
+      <div class="clause-title">임시적용기간 요금</div>
+      <span class="badge badge-green">SKA 유리</span>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="clause-detail">
+        <div class="row"><div class="row-label">내용 요약</div><div class="row-val">수급개시일 ~ 2026.12.31까지 한전 요금제 연동 임시 단가 적용. 연료비 연동 산식이 안정화되기 전 과도기 보호 장치.</div></div>
+        <div class="row"><div class="row-label">버전 변화</div><div class="row-val"><span class="change-add change-tag">신설</span> V1=없음 → V2·최종=신설</div></div>
+        <div class="row"><div class="row-label">유불리</div><div class="row-val">SKA 유리. 한전 요금 기준이므로 초기 구간에서 예측 가능한 비용 관리 가능. 2026년 말까지는 연료비 급등 영향 제한.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 제14조 -->
+  <div class="accordion-item">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="clause-num">제14조</div>
+      <div class="clause-title">중도해지 위약금</div>
+      <span class="badge badge-red">주요 리스크</span>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="clause-detail">
+        <div class="row"><div class="row-label">내용 요약</div><div class="row-val">수급개시 후 SKA가 계약을 중도 해지하는 경우 위약금 부과. 기본요금 합계(해지 시점 기준 1년치 이상) 수준.</div></div>
+        <div class="row"><div class="row-label">버전 변화</div><div class="row-val"><span class="change-mod change-tag">부분변경</span> V2에서 임시적용기간(~26.12.31) 중 해지 시 위약금 면제 조항 추가. 이 외 패널티 조항 자체는 V1·V2·최종 모두 존재함.</div></div>
+        <div class="row"><div class="row-label">유불리</div><div class="row-val">패널티는 사라지지 않음. 임시적용기간 면제는 소폭 완화. 셧다운·중동 이전 시 위약금 부담 여전히 존재.</div></div>
+        <div class="row"><div class="row-label">중요</div><div class="row-val">이행보증보험으로 대체 가능 여부 확인. 상세 내용은 탭③ [중도해지 패널티] 참조.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 제45조의6 -->
+  <div class="accordion-item">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="clause-num">제45조의6</div>
+      <div class="clause-title">최소사용량 미달요금</div>
+      <span class="badge badge-red">SKA 불리</span>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="clause-detail">
+        <div class="row"><div class="row-label">내용 요약</div><div class="row-val">계약된 최소 전력 사용량에 미달할 경우 SMP(계통한계가격) 기준으로 페널티 부과.</div></div>
+        <div class="row"><div class="row-label">버전 변화</div><div class="row-val"><span class="change-add change-tag">신설</span> V1=미확인 → V2·최종에서 신설</div></div>
+        <div class="row"><div class="row-label">유불리</div><div class="row-val">SKA 불리. 생산량 감소·설비 고장·수요 감소 시 패널티 추가 발생. SMP는 시장가격으로 변동성 있음.</div></div>
+        <div class="row"><div class="row-label">즉시 필요</div><div class="row-val">① 최소사용량 수준 확인 ② 생산량 감소 시나리오별 패널티 규모 시뮬레이션 ③ 중도해지 패널티와 중복 여부 검토</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 제45조의7 -->
+  <div class="accordion-item">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="clause-num">제45조의7</div>
+      <div class="clause-title">부족전력요금</div>
+      <span class="badge badge-yellow">SKMU 공급부족 시 SKA 부담</span>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="clause-detail">
+        <div class="row"><div class="row-label">내용 요약</div><div class="row-val">SKMU가 계약 물량을 공급하지 못하면 SKA가 한전 보완공급을 받게 되고, 그 비용을 SKA가 우선 부담하는 구조.</div></div>
+        <div class="row"><div class="row-label">버전 변화</div><div class="row-val"><span class="change-add change-tag">신설</span> V2·최종에서 신설</div></div>
+        <div class="row"><div class="row-label">유불리</div><div class="row-val">SKA 입장에서 불합리. SKMU의 귀책인데 SKA가 추가 비용 부담. SKMU에 구상권 행사 또는 SLA(서비스 수준 협약) 연계 필요.</div></div>
+        <div class="row"><div class="row-label">확인 필요</div><div class="row-val">SKMU 귀책 시 SKA의 보전청구 조항이 명시되어 있는지 원문 확인.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 제55조 -->
+  <div class="accordion-item">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="clause-num">제55조</div>
+      <div class="clause-title">분쟁 해결</div>
+      <span class="badge badge-gray">중립</span>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="clause-detail">
+        <div class="row"><div class="row-label">내용 요약</div><div class="row-val">분쟁 발생 시 협의 → 조정 → 소송 순서. 관할 법원 및 준거법 명시.</div></div>
+        <div class="row"><div class="row-label">버전 변화</div><div class="row-val"><span class="change-none change-tag">변경없음</span> V1·V2·최종 동일</div></div>
+        <div class="row"><div class="row-label">유불리</div><div class="row-val">중립. 관할 법원이 양사에 편의한 곳인지 확인 권장.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 제60조 이후 -->
+  <div class="accordion-item">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="clause-num">제60조~</div>
+      <div class="clause-title">기타 일반 조항 (불가항력·양도·비밀유지 등)</div>
+      <span class="badge badge-gray">중립</span>
+      <span class="accordion-arrow">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="clause-detail">
+        <div class="row"><div class="row-label">내용 요약</div><div class="row-val">불가항력(천재지변·전쟁 등), 양도 금지, 비밀유지 의무, 계약 변경 절차 등 표준 조항.</div></div>
+        <div class="row"><div class="row-label">버전 변화</div><div class="row-val"><span class="change-none change-tag">대부분 변경없음</span></div></div>
+        <div class="row"><div class="row-label">유불리</div><div class="row-val">불가항력 범위가 어디까지 인정되는지 확인 필요. 팬데믹·전쟁·에너지위기 포함 여부.</div></div>
       </div>
     </div>
   </div>
 
 </div>
-</div>
 
-<!-- ===== TAB 5: 한전 대비 ===== -->
-<div id="tab-kepco" class="tab-section">
-<div class="content">
-  <p class="section-title">SKA-SKMU 계약 vs 한전 공급: 5년 유불리 분석</div>
+<!-- ================= TAB 3: 중도해지 패널티 ================= -->
+<div id="tab-penalty" class="tab-panel">
 
-  <div class="alert blue">
-    <div class="alert-icon">📌</div>
-    <div class="alert-content">
-      <h4>결론: 무조건 유리하지 않습니다 — 조건부 유리</h4>
-      <p>"현재 가스 가격 수준 유지 + 한전 요금 지속 인상 + SKA의 최대부하 집중 사용"이라는 3가지 조건이 함께 충족돼야 유리합니다. 특히 현재 EIA 전망(HH $4.01) 기준으로는 SKMU가 한전보다 비쌀 가능성이 있으며, A원 할인액의 크기가 결정적입니다.</p>
+  <div class="card">
+    <div class="alert alert-red">
+      <strong>결론 먼저: 패널티 조항은 사라지지 않았습니다</strong>
+      V1(3/12), V2(3/23), 최종본(5/19) 모두 중도해지 위약금이 존재합니다. 다만 V2에서 임시적용기간(~2026.12.31) 중 해지 시 위약금 면제 조항이 추가되었을 뿐, 핵심 패널티 구조는 그대로입니다.
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title"><span class="icon">📊</span> 요금 구조 직접 비교</div>
-    <div class="compare-grid">
-      <div class="compare-box compare-kepco">
-        <h4>한전 산업용(을) 고압A (2025.4 기준)</h4>
-        <ul>
-          <li>기본요금: 7,170~8,230원/kW</li>
-          <li>전력량요금: 경부하 ~68원 / 최대부하 ~246원/kWh</li>
-          <li>기후환경요금: +5원/kWh</li>
-          <li>연료비조정요금: +5원/kWh (2026 1Q)</li>
-          <li>전력산업기반기금: +3.7%</li>
-          <li><strong>연평균 실질 단가: 약 125~130원/kWh</strong></li>
-        </ul>
+    <div class="card-title">📌 관련 조항 구조 — 제11조·제13조·제14조 흐름</div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-icon" style="background:var(--blue-light);color:var(--blue);">①</div>
+        <div class="flow-content">
+          <strong>제11조 — 계약 유효 기간 중 정상 운영 상태</strong>
+          <p>SKA가 계약대로 SKMU에서 전력을 구매하는 정상 상태. 패널티 없음.</p>
+        </div>
       </div>
-      <div class="compare-box compare-skmu">
-        <h4>SKMU 연료비 연동형 (HH $4 기준)</h4>
-        <ul>
-          <li>기본요금: 8,190원/kW</li>
-          <li>연료비요금: ~133원/kWh</li>
-          <li>탄소배출권요금: ~1원/kWh (잠정)</li>
-          <li>가산요금: +19원/kWh</li>
-          <li>기간할인액: -A원/kWh</li>
-          <li><strong>총 단가: 약 153 - A원/kWh</strong></li>
-        </ul>
+      <div class="flow-line"><div class="flow-line-inner"></div></div>
+      <div class="flow-step">
+        <div class="flow-icon" style="background:var(--yellow-light);color:var(--yellow);">②</div>
+        <div class="flow-content">
+          <strong>제13조 — SKA가 중도 해지 의사 통보</strong>
+          <p>중도해지 조건 해당 여부 판단. 임시적용기간(~26.12.31) 내 통보 시 면제 가능성 있음.</p>
+        </div>
       </div>
-    </div>
-
-    <div class="info-block" style="background:#fff8f0; border-color:#fbd38d;">
-      <h4 style="color:#744210;">📌 분기점 계산: A원이 얼마나 커야 대등한가?</h4>
-      <p style="color:#744210;">SKMU(153원) = 한전(128원)이 되려면 → <strong>A원 ≥ 25원/kWh</strong> 이상이어야 합니다.<br>
-      A원은 "시설부담금 ÷ 계약기간 중 예상 전력사용량"으로 산정 — <strong>A값 확인이 경제성 판단의 핵심 변수</strong>입니다.</p>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="icon">✅</span> SKMU가 한전보다 유리한 3가지 조건</div>
-    <div class="alert green">
-      <div class="alert-icon">1️⃣</div>
-      <div class="alert-content">
-        <h4>HH 가격이 충분히 낮을 때 (HH &lt; $3.5)</h4>
-        <p>연료비요금이 약 96원/kWh 수준 → 총 단가 ~116원 → 한전(128원) 대비 12원 저렴. 단, 현재 EIA 2026년 전망은 $4.01이므로 이 조건은 현재 충족되지 않습니다.</p>
-      </div>
-    </div>
-    <div class="alert green">
-      <div class="alert-icon">2️⃣</div>
-      <div class="alert-content">
-        <h4>한전이 대규모 추가 인상을 단행할 때</h4>
-        <p>한전 누적 적자 해소를 위한 추가 인상 가능성 있음. 연 5% 인상 5년 지속 시 현재 130원 → 165원/kWh. 이 경우 SKMU(HH $4 기준 153원)가 역전 가능. 분기점: 약 2~3년 후.</p>
-      </div>
-    </div>
-    <div class="alert green">
-      <div class="alert-icon">3️⃣</div>
-      <div class="alert-content">
-        <h4>SKA가 최대부하 시간대에 집중 사용할 때</h4>
-        <p>한전은 여름 최대부하 최대 ~246원/kWh로 급등. SKMU는 시간대 구분 없이 동일 단가. 24시간 연속 공정 비중이 높을수록 SKMU가 절대적으로 유리.</p>
+      <div class="flow-line"><div class="flow-line-inner"></div></div>
+      <div class="flow-step">
+        <div class="flow-icon" style="background:var(--red-light);color:var(--red);">③</div>
+        <div class="flow-content">
+          <strong>제14조 — 위약금 산정</strong>
+          <p>해지 시점의 잔여 기간에 해당하는 기본요금 합계 (최소 1년치 이상) 수준의 위약금 부과. 이행보증보험으로 대체 가능 여부 확인 필요.</p>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title"><span class="icon">❌</span> SKMU가 한전보다 불리해지는 4가지 시나리오</div>
-    <div class="table-wrap">
-      <table>
+    <div class="card-title">💰 위약금 산정 구조</div>
+    <div class="formula-box">
+<span class="cm">// 제14조 위약금 (추정 산식)</span>
+위약금 = <span class="hl">기본요금(8,190원/kW)</span> × 수전용량(kW) × 잔여 개월수
+
+<span class="cm">// 예시: 수전용량 10,000kW, 잔여 24개월</span>
+위약금 ≈ 8,190 × 10,000 × 24 = <span class="hl">약 19.7억원</span>
+
+<span class="cm">// 이행보증보험 대체 시 실제 현금 지출 방식 다를 수 있음</span>
+    </div>
+    <div class="alert alert-yellow">
+      <strong>주의</strong>
+      위 금액은 추정치입니다. 실제 계약서 제14조 원문의 정확한 산정식과 수전용량을 확인하여 정확한 위약금 규모를 계산하시기 바랍니다.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📊 버전별 패널티 조항 비교</div>
+    <table>
+      <thead><tr><th>항목</th><th>V1 (3/12)</th><th>V2 (3/23)</th><th>최종 (5/19)</th></tr></thead>
+      <tbody>
         <tr>
-          <th>시나리오</th><th>촉발 요인</th><th>SKMU 단가</th><th>한전 단가</th><th>차이 (불리분)</th>
+          <td>위약금 조항 존재 여부</td>
+          <td><span class="badge badge-red">존재</span></td>
+          <td><span class="badge badge-red">존재</span></td>
+          <td><span class="badge badge-red">존재</span></td>
         </tr>
         <tr>
-          <td>가스 급등 (2022 수준)</td>
-          <td>지정학 리스크, 유럽 LNG 수요</td>
-          <td class="unfavorable">~244원/kWh</td>
-          <td>~145원/kWh</td>
-          <td class="unfavorable"><strong>+99원/kWh</strong></td>
+          <td>임시적용기간 중 해지 면제</td>
+          <td><span class="badge badge-gray">없음</span></td>
+          <td><span class="badge badge-green">추가됨</span></td>
+          <td><span class="badge badge-green">유지됨</span></td>
         </tr>
         <tr>
-          <td>원화 약세 (환율 1,700)</td>
-          <td>달러 강세, 한국 경기 침체</td>
-          <td class="unfavorable">~168원/kWh</td>
-          <td>~133원/kWh</td>
-          <td class="unfavorable"><strong>+35원/kWh</strong></td>
+          <td>이행보증보험 대체</td>
+          <td>확인 필요</td>
+          <td>확인 필요</td>
+          <td>확인 필요</td>
         </tr>
         <tr>
-          <td>탄소배출권 급등</td>
-          <td>NDC 이행, 할당량 축소</td>
-          <td class="unfavorable">~180원/kWh</td>
-          <td>~130원/kWh</td>
-          <td class="unfavorable"><strong>+50원/kWh</strong></td>
+          <td>위약금 산정 방식</td>
+          <td>기본요금 합계</td>
+          <td>기본요금 합계</td>
+          <td>기본요금 합계</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚠️ SKA 셧다운 / 중동 이전 시나리오</div>
+    <div class="alert alert-red">
+      <strong>셧다운 또는 중동 이전으로 전력 수급 중단 시</strong>
+      ① 제14조 중도해지 위약금 (기본요금 합계) + ② 제45조의6 최소사용량 미달요금 (SMP 기반) 이중 부담 가능성 있음. 또한 제45조의7에 따른 한전 보완공급 비용도 별도 발생할 수 있음.
+    </div>
+    <div class="clause-detail" style="margin-top:12px;">
+      <div class="row"><div class="row-label">불가항력</div><div class="row-val">계약서 불가항력 조항이 셧다운·해외 이전에 적용되는지 여부 법무팀 검토 필요. 통상 경영 판단에 의한 이전은 불가항력 불인정.</div></div>
+      <div class="row"><div class="row-label">조기 협의</div><div class="row-val">중동 이전 검토 단계부터 SKMU와 계약 변경 또는 조기 종료 협의 개시 권장. 통보 후보다 사전 협의가 위약금 협상에 유리.</div></div>
+      <div class="row"><div class="row-label">보험 대체</div><div class="row-val">이행보증보험 전환 가능 여부 확인 — 현금 부담을 보험료로 대체하면 재무적 충격 완화 가능.</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= TAB 4: Hedge 분석 ================= -->
+<div id="tab-hedge" class="tab-panel">
+
+  <div class="card">
+    <div class="card-title">🔥 연료비 급등 시 SKA 노출 현황</div>
+    <div class="alert alert-red">
+      <strong>ZCC 삭제로 SKA는 연료비 급등에 무방비 상태</strong>
+      V1에 있던 Zero Cost Collar(연료비 상한 보호) 구조가 V2 이후 삭제되었습니다. 현재 계약에는 연료비 급등 시 SKA를 보호하는 계약상 Cap이 존재하지 않습니다.
+    </div>
+    <p style="margin-top:12px; font-size:13px; color:var(--mid);">HH 시나리오별 SKMU 전기요금 추정 (기간할인 A원 반영 전)</p>
+    <div style="margin-top:14px;">
+      <div class="bar-wrap">
+        <div class="bar-label">HH $2 (저가)</div>
+        <div class="bar-track"><div class="bar-fill" style="width:52%; background:#38a169;">약 120원/kWh</div></div>
+      </div>
+      <div class="bar-wrap">
+        <div class="bar-label">HH $4 (현재 전망)</div>
+        <div class="bar-track"><div class="bar-fill" style="width:65%; background:#d69e2e;">약 153원/kWh</div></div>
+      </div>
+      <div class="bar-wrap">
+        <div class="bar-label">HH $6 (급등 시나리오)</div>
+        <div class="bar-track"><div class="bar-fill" style="width:82%; background:#e53e3e;">약 185~195원/kWh</div></div>
+      </div>
+      <div class="bar-wrap">
+        <div class="bar-label">HH $8 (극단 시나리오)</div>
+        <div class="bar-track"><div class="bar-fill" style="width:95%; background:#742a2a;">약 220~230원/kWh</div></div>
+      </div>
+    </div>
+    <p style="font-size:11px; color:var(--gray); margin-top:8px;">※ 연료비 산식 계수(α, β, γ), 환율 1,350원/USD 기준 추정치. 실제 수치는 계약서 별표 확인 필요.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🛡️ V1 ZCC vs 현재 계약 비교</div>
+    <table>
+      <thead><tr><th>항목</th><th>V1 (ZCC 있을 때)</th><th>현재 최종 계약</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>연료비 상한(Cap)</td>
+          <td class="better">있음 — HH 일정 수준 초과 시 상한 적용</td>
+          <td class="worse">없음 — 무한 노출</td>
         </tr>
         <tr>
-          <td>SKMU 공급 불안정</td>
-          <td>발전설비 고장, 가스 공급 차질</td>
-          <td class="unfavorable">SKMU 기본료 + 한전 보완공급</td>
-          <td>해당 없음</td>
-          <td class="unfavorable">이중 비용 발생</td>
+          <td>연료비 하한(Floor)</td>
+          <td>있음 (ZCC 구조)</td>
+          <td class="better">없음 — HH 하락 시 SKA 그대로 혜택</td>
         </tr>
-      </table>
+        <tr>
+          <td>비용 예측 가능성</td>
+          <td class="better">높음</td>
+          <td class="worse">낮음</td>
+        </tr>
+        <tr>
+          <td>HH $6 시나리오 영향</td>
+          <td class="better">Cap으로 제한됨</td>
+          <td class="worse">전액 SKA 부담</td>
+        </tr>
+        <tr>
+          <td>헷지 비용</td>
+          <td>Zero Cost (SKMU가 부담)</td>
+          <td class="worse">SKA가 별도로 시장 헷지해야 함</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 SKA가 취할 수 있는 Hedge 방법</div>
+    <ul class="action-list">
+      <li>
+        <div class="action-num">1</div>
+        <div class="action-content">
+          <strong>SKMU에 Cap 재협상 요구 (최우선)</strong>
+          <span>계약서에 연료비 상한 조항 재도입. HH가 일정 수준(예: $5.5) 초과 시 초과분을 SKMU/SKA 분담 또는 Cap 적용. 현재 계약 이행 전이라면 재협상 기회 있음.</span>
+        </div>
+      </li>
+      <li>
+        <div class="action-num">2</div>
+        <div class="action-content">
+          <strong>HH 선물/스왑 활용</strong>
+          <span>CME HH 선물 또는 OTC 스왑을 통해 가스 가격 상한 고정. 비용 발생하나 급등 리스크 차단. 트레이딩팀과 협의 필요. 보통 1~2년 단위 롤링 헷지.</span>
+        </div>
+      </li>
+      <li>
+        <div class="action-num y">3</div>
+        <div class="action-content">
+          <strong>LPG/LNG 구매 조건과 연동</strong>
+          <span>SKA가 이미 HH 연동 LNG 구매 포지션을 보유하고 있다면, 전력요금의 HH 연동 효과와 상쇄되는 부분 분석. 자연 헷지(Natural Hedge) 비중 확인.</span>
+        </div>
+      </li>
+      <li>
+        <div class="action-num y">4</div>
+        <div class="action-content">
+          <strong>두바이유 노출 관리</strong>
+          <span>연료비 산식에 두바이유 계수(β)가 있다면 원유 가격 급등 시도 추가 부담. Brent/Dubai 스왑 또는 콜 옵션 매수 검토.</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚡ 탄소배출권요금 리스크</div>
+    <div class="clause-detail">
+      <div class="row"><div class="row-label">현재 수준</div><div class="row-val">잠정 1원/kWh (이행 전) → 이행 확정 후 실비 사후정산</div></div>
+      <div class="row"><div class="row-label">리스크</div><div class="row-val">국내 탄소배출권(EUA) 가격 상승 시 계약 기간 중 추가 비용 무제한 증가. 2030년 탄소중립 정책 강화 전망 감안 시 상승 압력 있음.</div></div>
+      <div class="row"><div class="row-label">대응</div><div class="row-val">① 상한 설정 협상 ② 탄소배출권 시장 가격 모니터링 ③ ETS 정책 변화 시 계약 재협의 조항 삽입 검토</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= TAB 5: 한전 대비 유불리 ================= -->
+<div id="tab-kepco" class="tab-panel">
+
+  <div class="card">
+    <div class="card-title">⚖️ 결론 — 무조건 유리하지 않습니다</div>
+    <div class="alert alert-red">
+      <strong>HH $4 기준, A원이 25원/kWh 미만이면 한전 대비 불리하거나 동등</strong>
+      현재 EIA 전망(HH $4.01/MMBtu) 기준으로 SKMU 전기요금은 약 153원/kWh 수준. 한전 산업용(을) 고압A 연평균 단가는 약 125~130원/kWh(2025.4 기준). A원이 충분히 크지 않으면 SKMU가 오히려 비쌀 수 있습니다.
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title"><span class="icon">⚖️</span> 종합 유불리 비교표</div>
-    <div class="table-wrap">
-      <table>
-        <tr><th>비교 항목</th><th>한전</th><th>SKMU (현 계약)</th><th>유리한 쪽</th></tr>
-        <tr><td>요금 예측 가능성</td><td>분기별 고시, 규제 가격</td><td>연료비·환율·탄소 실시간 변동</td><td class="favorable">한전 유리</td></tr>
-        <tr><td>가스 급등 시 보호</td><td>정부 완충 있음</td><td>무방비 (ZCC 없음)</td><td class="favorable">한전 유리</td></tr>
-        <tr><td>최대부하 요금</td><td>최대 246원/kWh</td><td>시간대 무관 동일 단가</td><td class="favorable">SKMU 유리</td></tr>
-        <tr><td>전력산업기반기금</td><td>3.7% 부담</td><td>면제 (단, 정책 변경 시 예외)</td><td class="favorable">SKMU 유리</td></tr>
-        <tr><td>공급 안정성</td><td>국가 전력망</td><td>SKMU 발전설비 의존</td><td class="favorable">한전 유리</td></tr>
-        <tr><td>탄소비용</td><td>기후환경요금 규제 (~5원)</td><td>실비 정산 (상한 없음)</td><td class="favorable">한전 유리</td></tr>
-        <tr><td>조기 해지 유연성</td><td>상대적으로 쉬움</td><td>위약금·할인반환</td><td class="favorable">한전 유리</td></tr>
-        <tr><td>한전 인상 지속 시</td><td>인상 그대로 반영</td><td>연료비 연동이므로 상대적 안정</td><td class="favorable">SKMU 유리 (조건부)</td></tr>
-      </table>
-    </div>
+    <div class="card-title">📊 직접 비교표</div>
+    <table>
+      <thead><tr><th>비교 항목</th><th>SKMU (이 계약)</th><th>한전 산업용(을) 고압A</th><th>평가</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>기본요금 수준</td>
+          <td>8,190원/kW</td>
+          <td>~8,000~9,000원/kW (용량·시간대별 상이)</td>
+          <td><span class="badge badge-gray">유사</span></td>
+        </tr>
+        <tr>
+          <td>HH $2 시나리오</td>
+          <td class="better">약 120원/kWh</td>
+          <td>~125원/kWh</td>
+          <td><span class="badge badge-green">SKMU 유리</span></td>
+        </tr>
+        <tr>
+          <td>HH $4 시나리오 (현재)</td>
+          <td class="worse">약 153원/kWh → A원 차감 필요</td>
+          <td>~125~130원/kWh</td>
+          <td><span class="badge badge-red">A원≥25원 필요</span></td>
+        </tr>
+        <tr>
+          <td>HH $6 시나리오</td>
+          <td class="worse">약 185~195원/kWh → A원 차감</td>
+          <td>~130~140원/kWh (인상 반영)</td>
+          <td><span class="badge badge-red">SKMU 매우 불리</span></td>
+        </tr>
+        <tr>
+          <td>연료비 급등 시 보호</td>
+          <td class="worse">없음 (ZCC 삭제)</td>
+          <td class="better">한전이 일부 흡수 (요금제 구조상)</td>
+          <td><span class="badge badge-red">한전 유리</span></td>
+        </tr>
+        <tr>
+          <td>계약 유연성</td>
+          <td class="worse">중도해지 위약금 있음</td>
+          <td class="better">수시 조정 가능</td>
+          <td><span class="badge badge-red">한전 유리</span></td>
+        </tr>
+        <tr>
+          <td>탄소배출권</td>
+          <td class="worse">별도 부과 (실비정산)</td>
+          <td>한전 요금에 내재</td>
+          <td><span class="badge badge-yellow">SKMU 추가 부담</span></td>
+        </tr>
+        <tr>
+          <td>공급 안정성</td>
+          <td>SKMU 단일 공급</td>
+          <td class="better">전국 계통 전력</td>
+          <td><span class="badge badge-yellow">한전 유리</span></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
-</div>
-</div>
-
-<!-- ===== TAB 6: 리스크 및 대응 ===== -->
-<div id="tab-risk" class="tab-section">
-<div class="content">
-  <p class="section-title">리스크 목록 및 대응 방향</div>
-
   <div class="card">
-    <div class="card-title"><span class="icon">🚨</span> 우선순위별 리스크 및 액션</div>
+    <div class="card-title">📐 A원(기간할인) 손익분기 시뮬레이션</div>
+    <div class="formula-box">
+<span class="cm">// HH $4 시나리오 기준 손익분기 계산</span>
+SKMU 단가(A차감전) ≈ <span class="hl">153원/kWh</span>
+한전 단가           ≈ <span class="hl">128원/kWh</span> (2025.4 기준)
 
-    <div class="priority-row">
-      <div class="priority-num pn-1">1</div>
-      <div class="priority-content">
-        <h4>연료비 급등 무방비 — ZCC 삭제 후 대안 없음</h4>
-        <p>HH $8 이상 시 한전 대비 kWh당 100원 이상 비싸질 수 있음. 계약서상 보호 없음.<br>
-        <strong>액션:</strong> 즉시 SKMU에 헷지 추진 계획 공문 요청. 가능하면 Side Agreement 체결로 Cap 단가·비용 분담 명문화. (기한: 2027.5.19)</p>
-      </div>
+손익분기 A원 = 153 - 128 = <span class="hl">25원/kWh</span>
+
+<span class="cm">// A원이 25원 이상이면 → SKMU가 한전 대비 유리</span>
+<span class="cm">// A원이 25원 미만이면 → SKMU가 한전 대비 불리 또는 동등</span>
+
+<span class="cm">// HH $6 시나리오 기준</span>
+손익분기 A원 = 190 - 135 = <span class="hl">55원/kWh</span> (거의 불가능한 수준)
     </div>
-
-    <div class="priority-row">
-      <div class="priority-num pn-2">2</div>
-      <div class="priority-content">
-        <h4>탄소배출권요금 사후 정산 — 상한 없음</h4>
-        <p>KAU 가격 급등 시(현재 ~1만원/t → 2030년 이후 3~5만원/t) kWh당 수십 원 추가 청구 가능. 검증 권리 없음.<br>
-        <strong>액션:</strong> 연간 탄소배출권 예상 부담액 자체 추정 모델 구축. SKMU에 탄소 관련 연간 실적 보고 요청 루틴 확립.</p>
-      </div>
-    </div>
-
-    <div class="priority-row">
-      <div class="priority-num pn-2">3</div>
-      <div class="priority-content">
-        <h4>SKMU 계약 양도 리스크</h4>
-        <p>SKMU가 제3자에게 계약 양도 시 SKA 동의권 없음. 새 공급자의 신용도·운영능력 불명확.<br>
-        <strong>액션:</strong> SK그룹 내 SKMU 사업 구조 변동 모니터링. 가능하면 별도 합의서로 "M&A 시 사전 통지 의무" 추가 요청.</p>
-      </div>
-    </div>
-
-    <div class="priority-row">
-      <div class="priority-num pn-3">4</div>
-      <div class="priority-content">
-        <h4>부담금 정부정책 변경 예외 조항</h4>
-        <p>면제 조항 있으나 "정부정책 변경 시 예외" — 범위 불명확. 분산에너지법 개정 시 부담금 부과 가능.<br>
-        <strong>액션:</strong> 산업부 분산에너지법 시행령·고시 개정 동향 분기별 트래킹.</p>
-      </div>
-    </div>
-
-    <div class="priority-row">
-      <div class="priority-num pn-3">5</div>
-      <div class="priority-content">
-        <h4>최소사용량 미달요금 (SMP 기반)</h4>
-        <p>생산 차질 시 SMP 기반 패널티. SMP 변동성 크고 상한 없음.<br>
-        <strong>액션:</strong> SKA 생산계획 vs 계약전력 연계 모니터링. 불가항력 사유 발생 시 SKMU와 즉시 협의 채널 가동.</p>
-      </div>
-    </div>
-
-    <div class="priority-row">
-      <div class="priority-num pn-4">6</div>
-      <div class="priority-content">
-        <h4>공급 불안정 이중 비용</h4>
-        <p>SKMU 공급 부족 시 한전 보완공급 비용을 SKA가 부담. SKMU 귀책 공급 중단 시에도 적용될 수 있음.<br>
-        <strong>액션:</strong> 한전 보완공급계약 내용 별도 확인. SKMU 귀책 시 비용 분담 논의 구조 마련.</p>
-      </div>
-    </div>
-
-    <div class="priority-row">
-      <div class="priority-num pn-5">7</div>
-      <div class="priority-content">
-        <h4>A원/kWh 규모 미확인 — 경제성 판단 불완전</h4>
-        <p>기간할인액 A원이 25원/kWh 미만이면 현재 가스 가격에서도 한전보다 비쌈. A값 확인이 가장 기초적인 선결 과제.<br>
-        <strong>액션:</strong> SKMU에 시설부담금 총액 및 예상 A원/kWh 수치 확인 요청. 즉시.</p>
-      </div>
+    <div class="alert alert-yellow">
+      <strong>핵심 행동 항목</strong>
+      계약서 별표에서 A원 수치를 즉시 확인하여 현재 시나리오별 유불리를 정확히 계산해야 합니다. A원이 공개되지 않은 경우 SKMU에 공식 확인 요청 필요.
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title"><span class="icon">📅</span> 향후 12개월 모니터링 체크리스트</div>
-    <div class="table-wrap">
-      <table>
-        <tr><th>시점</th><th>확인 항목</th><th>담당</th></tr>
-        <tr><td><strong>즉시</strong></td><td>A원/kWh 실제 값 확인 (시설부담금 ÷ 예상 사용량)</td><td>SKMU 문의</td></tr>
-        <tr><td><strong>즉시</strong></td><td>SKMU 헷지 추진 계획 공문 요청</td><td>기획팀</td></tr>
-        <tr><td><strong>2026 Q3</strong></td><td>KAU 탄소배출권 가격 동향 및 SKMU 배출 실적 확인</td><td>기획팀</td></tr>
-        <tr><td><strong>2026 Q4</strong></td><td>임시적용기간 종료 전 연료비 연동형 전환 조건 재확인</td><td>기획팀</td></tr>
-        <tr><td><strong>2026 Q4</strong></td><td>한전 2027년 요금 전망 수집 (유불리 재판단)</td><td>기획팀</td></tr>
-        <tr><td><strong>2027 Q1</strong></td><td>HH·브렌트·환율 3개월 이동평균 모니터링 (연료비요금 예측)</td><td>기획팀</td></tr>
-        <tr><td><strong>2027 Q2</strong></td><td>SKMU 헷지 가입 여부 확인 (기한 2027.5.19)</td><td>기획팀</td></tr>
-        <tr><td><strong>연 1회</strong></td><td>분산에너지법 시행령·고시 개정 동향 점검</td><td>기획팀</td></tr>
-      </table>
+    <div class="card-title">✅ SKMU 계약이 한전 대비 유리한 조건</div>
+    <div class="clause-detail">
+      <div class="row"><div class="row-label">유리 조건①</div><div class="row-val">A원이 25원/kWh 이상으로 확정될 때 (HH $4 기준)</div></div>
+      <div class="row"><div class="row-label">유리 조건②</div><div class="row-val">HH가 $2~$3 수준으로 하락할 때 (저가 가스 시나리오)</div></div>
+      <div class="row"><div class="row-label">유리 조건③</div><div class="row-val">한전이 전기요금을 대폭 인상할 때 (국내 전력요금 정상화 진행 시)</div></div>
+      <div class="row"><div class="row-label">유리 조건④</div><div class="row-val">SKA의 전력 사용량이 안정적으로 유지되어 기본요금 단가 효율이 높을 때</div></div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title"><span class="icon">💬</span> 협상 시 추가로 요구했어야 할 사항</div>
-    <div class="table-wrap">
-      <table>
-        <tr><th>항목</th><th>요구사항</th><th>효과</th></tr>
-        <tr><td>연료비 상한</td><td>ZCC 유지 또는 계약서에 Cap 단가 명시</td><td>HH 급등 시 SKA 부담 제한</td></tr>
-        <tr><td>환율 헷지</td><td>연료비 계산 환율에 밴드(예: 1,200~1,450원) 설정</td><td>달러 강세 시 추가 충격 완화</td></tr>
-        <tr><td>탄소배출권 상한</td><td>kWh당 최대 X원 초과 청구 불가 조항</td><td>탄소비용 예측 가능성 확보</td></tr>
-        <tr><td>SKMU 귀책 공급 중단</td><td>SKMU 귀책 시 보완공급 비용 SKMU 부담</td><td>이중 비용 구조 해소</td></tr>
-        <tr><td>헷지 비용 분담</td><td>"헷지 비용은 SKMU 부담, 절감분만 요금 반영"</td><td>헷지 비용 전가 방지</td></tr>
-        <tr><td>SKMU 양도 통지</td><td>양도 전 60일 통지 + SKA 거부권</td><td>공급자 교체 대응 시간 확보</td></tr>
-        <tr><td>계약전력 조정</td><td>연 1회 계약전력 재협의 권리</td><td>생산량 변동 대응 유연성</td></tr>
-        <tr><td>탄소 정보 열람권</td><td>배출권 취득 내역·정산 근거 고객 요청 시 열람</td><td>탄소배출권요금 검증 가능</td></tr>
-      </table>
+    <div class="card-title">❌ SKMU 계약이 한전 대비 불리한 조건</div>
+    <div class="clause-detail">
+      <div class="row"><div class="row-label">불리 조건①</div><div class="row-val">HH가 $5 이상으로 상승할 때 — A원을 압도하는 요금 증가</div></div>
+      <div class="row"><div class="row-label">불리 조건②</div><div class="row-val">생산량 감소 시 최소사용량 미달 패널티(제45조의6) 발생</div></div>
+      <div class="row"><div class="row-label">불리 조건③</div><div class="row-val">공장 셧다운·이전 시 중도해지 위약금(제14조) 부담</div></div>
+      <div class="row"><div class="row-label">불리 조건④</div><div class="row-val">탄소배출권 가격이 급등하여 추가 요금 발생</div></div>
+      <div class="row"><div class="row-label">불리 조건⑤</div><div class="row-val">SKMU 공급 부족 시 한전 보완공급 비용 SKA 추가 부담</div></div>
     </div>
   </div>
 
 </div>
-</div>
 
-<!-- Footer -->
-<div class="page-footer">
-  <p>SKA-SKMU 분산에너지 전력 직접거래계약 분석 | SK가스 기획팀 | 2026.06.07</p>
-  <p style="margin-top:4px; font-size:11px; opacity:0.6;">본 분석은 참고용이며 법률 자문이 아닙니다. 계약 관련 최종 판단은 법무 검토를 거치시기 바랍니다.</p>
-</div>
+</div><!-- /main -->
 
 <script>
-function showTab(name) {
-  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  event.target.classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function toggleAcc(header) {
+  const isOpen = header.classList.contains('open');
+  // Close all in same parent (optional — let multiple open)
+  header.classList.toggle('open', !isOpen);
 }
 </script>
 </body>
